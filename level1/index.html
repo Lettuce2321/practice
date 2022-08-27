@@ -44,13 +44,32 @@
         <button class="modal-btn mt-5" id="Login">modal</button>
 
         <span class="badge bg-dark">Dark 🔄</span>
+        <p>태조 이성계가 태어난 년도는?</p>
+        <input type="text" id="answer">
+        <button id="send-answer">제출</button>
 
+        
         
 
 
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            var count = 0;
+            
+            $('#send-answer').on('click', function() {
+                if(count<3) {
+                count++;
+                if($('#answer').val() == 1335) {
+                    alert('성공');
+                } else {
+                    alert('멍청아(기회)' + 3-count);
+                }
+
+                }
+            })
+        </script>
         <script>
 
             var 이름 = 'kim';
