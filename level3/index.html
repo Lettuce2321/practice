@@ -31,6 +31,21 @@
           <p>배송정보입니다. Shipping</p>
         </div>
       </div>
+
+      <div style="overflow: hidden">
+        <div class="slide-container">
+          <div class="slide-box">
+            <img src="../img/car1.png">
+          </div>
+          <div class="slide-box">
+            <img src="../img/car2.png">
+          </div>
+          <div class="slide-box">
+            <img src="../img/car3.png">
+          </div>
+        </div>
+      </div> 
+
       <div class="container ">
         <div class="row">
       
@@ -58,19 +73,51 @@
     </form>
 
     <div class="card-background">
-      <div class="card-box">
-        <img src="https://codingapple.com/wp-content/uploads/2019/10/card1.png">
+      <div class="card-box" >
+        <img src="https://codingapple.com/wp-content/uploads/2019/10/card1.png" draggable="false">
       </div>
       <div class="card-box">
-        <img src="https://codingapple.com/wp-content/uploads/2019/10/card2.png">
+        <img src="https://codingapple.com/wp-content/uploads/2019/10/card2.png" draggable="false">
       </div>
       <div class="card-box">
-        <img src="https://codingapple.com/wp-content/uploads/2019/10/card3.png">
+        <img src="https://codingapple.com/wp-content/uploads/2019/10/card3.png" draggable="false">
       </div>
     </div>
       
+    
     <!-- 여기 밑으로 스크립트 작성 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      var page = 1;
+      var start, move, end;
+      var down = false;
+      $('.slide-container').eq(0).on('mousedown', function(e) {
+        $('.slide-container').css('transition', 'none');
+        start = e.clientX;
+        down = true;
+      });
+      $('.slide-container').eq(0).on('mouseup', function(e) {
+        end = e.clientX;
+        console.log(end);
+        down = false;
+        console.log(`거리${start-end}`)
+        if(start-end > 200) {
+          $('.slide-container').css('transition', 'all 1s');
+          $('.slide-container').css('transform', 'translateX(-100vw)');
+          page = 2;
+        } else {
+          $('.slide-container').css('transition', 'all 1s');
+          $('.slide-container').css('transform', 'translateX(0vw)');
+        }
+      });
+      $('.slide-container').eq(0).on('mousemove', function(e) {
+        move = e.clientX - start;
+        if (down) {
+          $('.slide-container').css('transform', `translateX(${page*100}vw +${move} movepx)`)
+        }
+      })
+    </script>
+    <script>
 
       // var count = 0;
 
