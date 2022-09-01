@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>javascript2</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="../css/main.css" rel="stylesheet">
+  </head>
+  <body>
+      <div class="container ">
+        <div class="row">
+      
+            
+      
+        </div>
+      </div> 
+      <div class="container mt-3">
+        <button class="btn btn-danger">더보기</button>
+        <button class="btn btn-primary">정렬</button>
+        <button type="button" class="btn btn-secondary">문자정렬</button>
+        <button type="button" class="btn btn-dark">6만원이하</button>
+      </div>
+
+    
+    <!-- 여기 밑으로 스크립트 작성 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        console.log(아());
+        function 아() {
+            for(let i=0; i<10; i++) {
+            if(i==8) 
+                return false;
+        }
+            return true;
+        }
+    </script>
+    <script>
+
+      $('.btn-danger').on('click',function() {
+          $.get('https://codingapple1.github.io/js/more1.json')
+            .done(function(data) {
+              show(data);
+            })
+        }
+      );
+      $('.btn-primary').on('click', function() {
+      $.get('https://codingapple1.github.io/js/more1.json')
+      .done(function(data) {
+        data.sort(function(a, b) {
+          return a.price - b.price;
+        })
+        console.log(data);
+        $('.row').html('');
+        show(data);
+      })
+      })
+      $('.btn-secondary').on('click', function() {
+        $.get('https://codingapple1.github.io/js/more1.json')
+        .done(function(data) {
+          data.sort(function(a, b) {
+            return b.title - a.title;
+          })
+          console.log(data);  
+          $('.row').html('');
+          show(data);
+        })
+      })
+      $('.btn-dark').on('click', function() {
+        $.get('https://codingapple1.github.io/js/more2.json')
+        .done(function(data) {
+          var filteredData = data.filter(function(item) {
+            return item.price < 60000;
+          })
+          console.log(filteredData);
+          $('.row').html('');
+          show(filteredData);
+        })
+      })
+
+      function show(data) {
+        data.forEach(function(item) {
+                var card = `<div class="col-sm-4">
+                    <img src="https://via.placeholder.com/600" class="w-100">
+                    <h5 id='asdf'>${item.title}</h5>
+                    <p>가격 : ${item.price}</p>
+                    <button class="buy">구매</button>
+                  </div>`;
+                  $('.row').append(card);
+        })
+      }
+
+      $(document).on('click', '.buy', function(e) {
+
+        var title = $(e.target).siblings('h5').text();
+        if(localStorage.getItem('cart') != null) {
+            var bucket = JSON.parse(localStorage.getItem('cart'));
+            if(check(title, bucket)) {
+                bucket.push({title: title, amount: 1});
+                localStorage.setItem('cart', JSON.stringify(bucket));
+            } else {
+                var order = find(title, bucket);
+                bucket[order].amount++;
+                localStorage.setItem('cart', JSON.stringify(bucket));
+            }
+            
+        } else {
+            localStorage.setItem('cart', JSON.stringify([{title: title, amount: 1}]));
+            console.log(JSON.parse(localStorage.getItem('cart')));
+        }
+        
+
+        // if(localStorage.getItem)
+    //     if(localStorage.getItem('cart') != null) {
+    //         var bucket = JSON.parse(localStorage.getItem('cart'));
+    //         if(check(title, bucket)) {
+    //             bucket.push(title);
+    //             localStorage.setItem('cart', JSON.stringify(bucket));
+    //         }
+            
+    //     } else {
+    //         localStorage.setItem('cart', JSON.stringify([title]));
+    //         console.log(JSON.parse(localStorage.getItem('cart')));
+    //     }
+    //   });
+
+      function check(itemTitle, arr) { 
+        for(let i=0; i<arr.length; i++) {
+            if(arr[i].title == itemTitle)
+                return false;
+        }
+        return true;
+      }
+      function find(itemTitle, arr) {
+        for(let i=0; i<arr.length; i++) {
+            if(arr[i].title == itemTitle)
+                return i;
+        }
+      }
+    });
+    </script>
+    <script>
+      
+    </script>
+    <script src="tab.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  </body>
+</html>
